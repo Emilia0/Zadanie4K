@@ -1,46 +1,69 @@
 (function () {
-    //var app = angular.module('fundCompare',[]);
+    var app = angular.module('fundProfit',['ui.router']);
 
-    $.ajax({
-        type: "GET",
-        url: "data/data.json",
-        dataType: "json",
-        error: function () {
-            console.log('Opps error');
-        },
-        success: function (response) {
-             var myArray = [
-                "05/01/1998",
-                "06/01/1998",
-                "07/01/1998",
-                "08/01/1998",
-                "09/01/1998",
-                "12/01/1998",
-                "13/01/1998",
-                "14/01/1998",
-                "15/01/1998",
-                "16/01/1998",
-                "19/01/1998",
-                "20/01/1998",
-                "21/01/1998",
-                "22/01/1998",
-                "23/01/1998",
-                "26/01/1998",
-                "27/01/1998",
-                "28/01/1998",
-                "29/01/1998",
-                "30/01/1998"];
+    app.config(function ($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/');
+        $stateProvider
+            .state('main', {
+                url: '/',
+                templateUrl: 'html/main.html'
+            })
+            .state('compare', {
+                url: '/compare',
+                templateUrl: 'html/compare.html'
+            });
 
-            var firstDate = myArray[11];
-
-            console.log(response);
-            //dateArray.push(Object.getOwnPropertyNames(response));
-
-            var value = (response["01/01/1998"]);
-
-            console.log(value)
-        }
     });
+
+    //app.config(["$locationProvider", function ($locationProvider) {
+    //    $locationProvider.html5Mode(true);
+    //}]);
+
+    app.controller('DataController', ['$scope','$location', function($scope, $location){
+
+        var datepicker = $('.datepicker').datepicker({
+            weekStart: 1,
+            autoclose: true,
+            format: "dd/mm/yyyy",
+            endDate: '12/05/2016',
+            startDate: '08/01/1998'
+        })
+            .on('changeDate', function () {
+            date1 = $("#date1").val();
+            date2 = $("#date2").val();
+        });
+
+        $scope.goCompare = function(){
+            $location.url('/compare');
+        };
+
+
+    }]);
+
+    //$.ajax({
+    //    type: "GET",
+    //    url: "data/data.json",
+    //    dataType: "json",
+    //    error: function () {
+    //        console.log('Opps error');
+    //    },
+    //    success: function (response) {
+    //         var myArray = [
+    //            "05/01/1998",
+    //            "06/01/1998",
+    //            "07/01/1998",
+    //
+    //
+    //        var firstDate = myArray[11];
+    //
+    //        console.log(response);
+    //        //dateArray.push(Object.getOwnPropertyNames(response));
+    //
+    //        var value = (response["01/01/1998"]);
+    //
+    //        console.log(value)
+    //    }
+    //});
 
 //    To do List:
 
